@@ -24,13 +24,6 @@ def download_data(url , output_folder):
     new_raw_IMG_folder_path = os.path.join(output_folder, "IMGs")
     os.mkdir(new_raw_IMG_folder_path)
 
-    # Create folders for .ras and .uvw files
-    new_raw_RAS_folder_path = os.path.join(output_folder, "RASs")
-    os.mkdir(new_raw_RAS_folder_path)
-    
-    new_raw_UVW_folder_path = os.path.join(output_folder, "UVW")
-    os.mkdir(new_raw_UVW_folder_path)
-
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -42,24 +35,19 @@ def download_data(url , output_folder):
         if not any(x in fullstring for x in substrings):
             continue
 
-        file_extension = d['href'].split(".")[-1]
-        if file_extension in ["IMG", "ras", "uvw"]:
-            file_url = url + d['href']
-            if file_extension == "IMG":
-                download_path = new_raw_IMG_folder_path + "/" + d['href']
-            elif file_extension == "ras":
-                download_path = new_raw_RAS_folder_path + "/" + d['href']
-            elif file_extension == "uvw":
-                download_path = new_raw_UVW_folder_path + "/" + d['href']
+        if(d['href'].split(".")[-1] == "IMG"):
+        
+            image_url = url + d['href']
 
-            with open(download_path, 'wb') as f:
+            with open(new_raw_IMG_folder_path + "/" + d['href'], 'wb') as f:
                 try:
-                    im = requests.get(file_url)
-                except:
+                    im = requests.get(image_url)
+                
+                except :
                     current_time = time.time()
                     retry_time = current_time + (60 * 3)
-                    while time.time() < retry_time:
-                        im = requests.get(file_url)
+                    while(time.time() < retry_time):
+                        im = requests.get(image_url)       
 
                 f.write(im.content)
       

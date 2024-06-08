@@ -55,13 +55,13 @@ def build_url_RAW(cam,sol):
     return start_url + mid_url + sol + end_url + "/"
 
 
-def build_url_Calibrated(cam,sol):
+def build_url_Calibrated(cam,sol, file_type='rad'):
 
     start_url = "https://pds-imaging.jpl.nasa.gov/data/mars2020/" 
 
     if(cam == "zcam"):
             mid_url = "mars2020_mastcamz_sci_calibrated/data/"
-            end_url = "/rad"
+            end_url = f"/{file_type}"
             sol = (4-len(sol)) * "0" + sol 
 
     elif(cam == "ncam"):
@@ -200,9 +200,17 @@ def choices_merged(camera_choice, raw_cali_choice,sol_num,new_sol_folder_path):
             zcam_process(zcam_url, new_sol_folder_path + "\\",sol_num)
             
         elif(raw_cali_choice == 2):
-            zcam_url = build_url_Calibrated("zcam",sol)
+            # Download 'rad' files
+            zcam_url = build_url_Calibrated("zcam",sol,"rad")
             print(zcam_url)
             zcam_process(zcam_url, new_sol_folder_path,sol_num)
+
+            # Download 'ras' files in a separate folder
+            zcam_ras_url = build_url_Calibrated("zcam",sol,"ras")
+            ras_folder_path = os.path.join(new_sol_folder_path, "ras")
+            os.mkdir(ras_folder_path)
+            print(zcam_ras_url)
+            zcam_process(zcam_ras_url, ras_folder_path,sol_num)
 
         elif(raw_cali_choice == 3):
             zcam_url = build_url_Stereo("zcam",sol)

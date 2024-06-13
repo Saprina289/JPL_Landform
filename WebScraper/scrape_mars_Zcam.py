@@ -18,36 +18,33 @@ import urllib3, socket
 from urllib3.connection import HTTPConnection
     
 
-def download_data(url , output_folder): 
+def download_data(url , output_folder, file_type): 
    
 
     new_raw_IMG_folder_path = os.path.join(output_folder, "IMGs")
     os.mkdir(new_raw_IMG_folder_path)
 
-    r = requests.get(url)
+    r = requests.get(url, verify=False)
     soup = BeautifulSoup(r.text, 'html.parser')
 
     for d in soup.find_all('a'):
-
-        substrings = ["ZL0","ZR0"]  
+        substrings = ["ZL0","ZR0","ZLF","ZRF"]  
         fullstring = d['href']
 
         if not any(x in fullstring for x in substrings):
             continue
-
-        if(d['href'].split(".")[-1] == "IMG"):
-        
+        if(d['href'].split(".")[-1] == "IMG" and d['href'].split("_")[3][-3:] == file_type):
             image_url = url + d['href']
 
             with open(new_raw_IMG_folder_path + "/" + d['href'], 'wb') as f:
                 try:
-                    im = requests.get(image_url)
+                    im = requests.get(image_url, verify=False)
                 
                 except :
                     current_time = time.time()
                     retry_time = current_time + (60 * 3)
                     while(time.time() < retry_time):
-                        im = requests.get(image_url)       
+                        im = requests.get(image_url, verify=False)       
 
                 f.write(im.content)
       
@@ -167,9 +164,9 @@ def getFmt(sample_type, samplebits):
 
 
 
-def convert_to_png(solFolderName):
-    sol_folder_path ="F:\\mars2020\\radhika_work\\MARS-PHOTOGRAMMETRY\\DATA\\ZCAM\\" + solFolderName + "\\CALI"
+def convert_to_png(sol_folder_path):
     new_png_folder_path = os.path.join(sol_folder_path, "PNGs+XMPs")
+    print("PNG Folder Name:", new_png_folder_path)
     os.mkdir(new_png_folder_path)
 
 

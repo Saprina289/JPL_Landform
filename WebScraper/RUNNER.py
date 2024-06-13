@@ -60,9 +60,14 @@ def build_url_Calibrated(cam,sol, file_type='rad'):
     start_url = "https://pds-imaging.jpl.nasa.gov/data/mars2020/" 
 
     if(cam == "zcam"):
-            mid_url = "mars2020_mastcamz_sci_calibrated/data/"
-            end_url = f"/{file_type}"
-            sol = (4-len(sol)) * "0" + sol 
+            if file_type == "rad":
+                mid_url = "mars2020_mastcamz_sci_calibrated/data/"
+                end_url = "/rad"
+                sol = (4-len(sol)) * "0" + sol 
+            else:
+                mid_url = "mars2020_mastcamz_ops_calibrated/data/sol/"
+                end_url = "/ids/rdr/zcam"
+                sol = (5-len(sol)) * "0" + sol 
 
     elif(cam == "ncam"):
         #mid_url = "mars2020_navcam_ops_raw/data/sol/"
@@ -118,7 +123,7 @@ def zcam_xyz_process(zcam_url, new_sol_folder_path,sol_num):
 
 def zcam_process(zcam_url, new_sol_folder_path,sol_num):
     try:
-        zc.download_data(zcam_url,new_sol_folder_path) #downloads the data from the url created
+        zc.download_data(zcam_url,new_sol_folder_path, new_sol_folder_path.split("\\")[-1]) #downloads the data from the url created
 
         print("######## CONVERTING TO PNG ##########")
 
@@ -201,15 +206,19 @@ def choices_merged(camera_choice, raw_cali_choice,sol_num,new_sol_folder_path):
             
         elif(raw_cali_choice == 2):
             # Download 'rad' files
-            zcam_url = build_url_Calibrated("zcam",sol,"rad")
-            print(zcam_url)
-            zcam_process(zcam_url, new_sol_folder_path,sol_num)
+            zcam_rad_url = build_url_Calibrated("zcam",sol,"rad")
+            print(zcam_rad_url)
+            rad_folder_path = new_sol_folder_path + "\\RAD"
+            os.mkdir(rad_folder_path)
+            print("RAD Folder: ", rad_folder_path)
+            zcam_process(zcam_rad_url, rad_folder_path,sol_num)
 
             # Download 'ras' files in a separate folder
             zcam_ras_url = build_url_Calibrated("zcam",sol,"ras")
-            ras_folder_path = os.path.join(new_sol_folder_path, "ras")
-            os.mkdir(ras_folder_path)
             print(zcam_ras_url)
+            ras_folder_path = new_sol_folder_path + "\\RAS"
+            os.mkdir(ras_folder_path)
+            print("RAS folder:", ras_folder_path)
             zcam_process(zcam_ras_url, ras_folder_path,sol_num)
 
         elif(raw_cali_choice == 3):

@@ -23,7 +23,7 @@ def download_data(url , output_folder):
     new_raw_IMG_folder_path = os.path.join(output_folder, "IMGs")
     os.mkdir(new_raw_IMG_folder_path)
 
-    r = requests.get(url)
+    r = requests.get(url, verify=False)
     soup = BeautifulSoup(r.text, 'html.parser')
 
     for d in soup.find_all('a'):
@@ -39,13 +39,13 @@ def download_data(url , output_folder):
             image_url = url + d['href']
             with open(new_raw_IMG_folder_path + "/" + d['href'], 'wb') as f:
                 try:
-                    im = requests.get(image_url)
+                    im = requests.get(image_url, verify=False)
                 
                 except :
                     current_time = time.time()
                     retry_time = current_time + (60 * 3)
                     while(time.time() < retry_time):
-                        im = requests.get(image_url)       
+                        im = requests.get(image_url, verify=False)       
 
                 f.write(im.content)
       

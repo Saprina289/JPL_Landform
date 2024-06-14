@@ -22,6 +22,10 @@ def download_data(url , output_folder):
 
     new_raw_IMG_folder_path = os.path.join(output_folder, "IMGs")
     os.mkdir(new_raw_IMG_folder_path)
+    IMG_folder_path = os.path.join(new_raw_IMG_folder_path, "XYZ")
+    os.mkdir(IMG_folder_path)
+    IMG_folder_path = os.path.join(new_raw_IMG_folder_path, "UVW")
+    os.mkdir(IMG_folder_path)
 
     r = requests.get(url, verify=False)
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -34,10 +38,15 @@ def download_data(url , output_folder):
         if not any(x in fullstring for x in substrings):
             continue
 
-        if(d['href'].split(".")[-1] == "IMG"):
+        if(d['href'].split(".")[-1] == "IMG" and (d['href'].split("_")[3][-3:] == "XYZ" or d['href'].split("_")[3][-3:] == "UVW")):
 
             image_url = url + d['href']
-            with open(new_raw_IMG_folder_path + "/" + d['href'], 'wb') as f:
+            # place file into appropriate folder
+            if d['href'].split("_")[3][-3:] == "XYZ":
+                IMG_folder_path = os.path.join(new_raw_IMG_folder_path, "XYZ")
+            else:
+                IMG_folder_path = os.path.join(new_raw_IMG_folder_path, "UVW")
+            with open(IMG_folder_path + "\\" + d['href'], 'wb') as f:
                 try:
                     im = requests.get(image_url, verify=False)
                 

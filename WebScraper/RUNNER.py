@@ -283,7 +283,7 @@ if __name__ == "__main__":
 
        sol = input("Enter Sol \n")
 
-       root_path = "F:\\mars2020\\radhika_work\\MARS-PHOTOGRAMMETRY" #os.getcwd() 
+       root_path = "." #os.getcwd() 
        new_sol_folder_path = root_path + "\\" +  data_folder + num_camera_names_labels[str(camera_choice)] + "\\sol_" + sol + "_" +  num_camera_names_labels[str(camera_choice)] + "\\" +raw_cali_label[raw_cali_choice] 
 
        print(new_sol_folder_path)
@@ -310,7 +310,7 @@ if __name__ == "__main__":
 
             sol = str(sol)
 
-            root_path = "F:\\mars2020\\radhika_work\\MARS-PHOTOGRAMMETRY" #os.getcwd() 
+            root_path = "." #os.getcwd() 
             new_sol_folder_path = root_path + "\\" +  data_folder + num_camera_names_labels[str(camera_choice)] + "\\sol_" + sol + "_" +  num_camera_names_labels[str(camera_choice)] + "\\" + raw_cali_label[raw_cali_choice] + "\\"
 
             print(new_sol_folder_path)

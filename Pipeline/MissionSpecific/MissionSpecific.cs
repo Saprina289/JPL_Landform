@@ -20,7 +20,7 @@ namespace JPLOPS.Pipeline
         }
 
         [ConfigEnvironmentVariable("LANDFORM_ALLOW_PDS_LABEL_FILES")]
-        public bool AllowPDSLabelFiles { get; set; } = false;
+        public bool AllowPDSLabelFiles { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_ALLOW_VIC_FILES")]
         public bool AllowVICFiles { get; set; } = true;
@@ -44,7 +44,7 @@ namespace JPLOPS.Pipeline
         public bool AllowThumbnails { get; set; } = false;
 
         [ConfigEnvironmentVariable("LANDFORM_ALLOW_PARTIAL_PRODUCTS")]
-        public bool AllowPartialProducts { get; set; } = false;
+        public bool AllowPartialProducts { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_ALLOW_VIDEO_PRODUCTS")]
         public bool AllowVideoProducts { get; set; } = false;
@@ -134,10 +134,10 @@ namespace JPLOPS.Pipeline
         public bool UseMastcamForOrbitalTriggering { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_USE_MASTCAM_FOR_ALIGNMENT")]
-        public bool UseMastcamForAlignment { get; set; } = false;
+        public bool UseMastcamForAlignment { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_USE_MASTCAM_FOR_MESHING")]
-        public bool UseMastcamForMeshing { get; set; } = false;
+        public bool UseMastcamForMeshing { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_USE_MASTCAM_FOR_TEXTURING")]
         public bool UseMastcamForTexturing { get; set; } = true;
@@ -166,13 +166,13 @@ namespace JPLOPS.Pipeline
         //comma separated list of processing types to allow
         //sorted in order of preference (best last)
         [ConfigEnvironmentVariable("LANDFORM_ALLOWED_PROCESSING_TYPES")]
-        public string AllowedProcessingTypes { get; set; } = "_"; 
+        public string AllowedProcessingTypes { get; set; } = "_";
 
         //comma separated list of producers to allow
         //must match RoverProductProducer enum values
         //sorted in order of preference (best last)
         [ConfigEnvironmentVariable("LANDFORM_ALLOWED_PRODUCERS")]
-        public string AllowedProducers { get; set; } = "OPGS"; 
+        public string AllowedProducers { get; set; } = "ASU, OPGS"; 
 
         [ConfigEnvironmentVariable("LANDFORM_CONTEXTUAL_MESH_PREFER_OLDER_PRODUCTS")]
         public bool ContextualMeshPreferOlderProducts{ get; set; } = true;

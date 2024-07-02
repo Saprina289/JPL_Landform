@@ -20,10 +20,10 @@ namespace JPLOPS.Pipeline
         }
 
         [ConfigEnvironmentVariable("LANDFORM_USE_MASTCAM_FOR_ALIGNMENT")]
-        public bool UseMastcamForAlignment { get; set; } = false;
+        public bool UseMastcamForAlignment { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_USE_MASTCAM_FOR_MESHING")]
-        public bool UseMastcamForMeshing { get; set; } = false;
+        public bool UseMastcamForMeshing { get; set; } = true;
 
         [ConfigEnvironmentVariable("LANDFORM_USE_REAR_HAZCAM_FOR_ALIGNMENT")]
         public bool UseRearHazcamForAlignment { get; set; } = true;
@@ -67,7 +67,7 @@ namespace JPLOPS.Pipeline
         //must match RoverProductProducer enum values
         //sorted in order of preference (best last)
         [ConfigEnvironmentVariable("LANDFORM_ALLOWED_PRODUCERS")]
-        public string AllowedProducers { get; set; } = "OPGS";  //"OPGS,ASU"
+        public string AllowedProducers { get; set; } = "OPGS,ASU";  //"OPGS,ASU"
 
         //SSM service watchdog process name, empty to disable
         [ConfigEnvironmentVariable("LANDFORM_WATCHDOG_SSM_PROCESS")]

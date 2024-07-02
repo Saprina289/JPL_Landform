@@ -4,7 +4,7 @@
 
 Landform is a terrain mesh processing toolkit that can generate [3DTiles](https://www.ogc.org/standard/3dtiles/) datasets.  It is used by the Mars 2020 mission in ground data processing to convert textured terrain meshes into the 3DTiles format, as well as to create [contextual meshes](ContextualMesh.md) that combine up to thousands of in-situ and orbital observations.  Landform can read mesh, image, and pointcloud input data in a variety of formats including a limited subset of the OpenInventor binary iv format, GLTF, OBJ, PLY, PNG, JPG, TIFF, FITS, [GeoTIFF](https://www.ogc.org/standard/geotiff/), [VICAR](https://www-mipl.jpl.nasa.gov/external/VICAR_file_fmt.pdf), and [PDS ODL-wrapped VICAR](https://pds.nasa.gov/tools/about/) (IMG).  Landform can write mesh and image data in many formats including 3DTiles, GLTF, OBJ, PLY, PNG, JPG, TIFF, and FITS.
 
-Landform can be run as a command-line toolset or optionally deployed to AWS as a terrain processing service.  It can also be used as a library for building other terrain mesh processing tools.
+Landform can be run as a command-line toolset or optionally deployed to AWS as a terrain processing service.  It can also be used as a library for building other terrain mesh processing tools.  It can read mesh, image, and pointcloud input data in a variety of formats including a limited subset of the OpenInventor binary iv format, GLTF, OBJ, PLY, PNG, JPG, TIFF, FITS, [GeoTIFF](https://www.ogc.org/standard/geotiff/), [VICAR](https://www-mipl.jpl.nasa.gov/external/VICAR_file_fmt.pdf), and [PDS ODL-wrapped VICAR](https://pds.nasa.gov/tools/about/) (IMG), and it can write mesh and image data in many formats including 3DTiles, GLTF, OBJ, PLY, PNG, JPG, TIFF, and FITS.
 
 In addition to serailizers for all the essential data formats used in Mars surface mission terrain processing, Landform also contains implementations of many useful and practical mesh and image processing algorithms including composite image stitching, texture backprojection, texture baking, texture atlassing, mesh decimation, mesh resampling, mesh reconstruction from pointclouds, mesh clipping, convex hull computation, CAHV[ORE] camera models, software rasterization, ray casting, feature-based mesh alignment, and creation of hierarchical 3DTiles datasets from large monolithic textured meshes.
 
@@ -15,6 +15,12 @@ The top-level command-line entrypoint is in [Landform.cs](./Landform/Landform.cs
 ./Landform/bin/Release/Landform.exe
 ```
 Additional documentation is provided in the header comments of the corresponding source files in the [Landform](./Landform) subproject.
+
+## Contributors
+
+Landform was originally developed at the Jet Propulsion Laboratory, California Institute of Technology for use in ground data processing for planetary surface missions under a contract with the National Aeronautics and Space Administration.
+
+Individual contributors include Marsette Vona, Bob Crocco, Alexander Menzies, Charles Goddard, Thomas Schibler, Gailin Pease, Nicholas Charchut, Nicholas Anastas, Keavon Chambers, Benjamin Nuernberger, and Andrew Zhang.
 
 ## Contributors
 
@@ -67,4 +73,4 @@ Landform and its underlying matrix library XNAMath (ported from [MonoGame](https
 
 Images are accessed by pixel using zero based rows and columns with the origin at the top left of the image. Integer pixel coordinats are at the top left corner of the pixel.  Some of the camera model code uses pixel center conventions so be aware of half-pixel offsets.
 
-Landform expects that texture coordinates for meshes follow the OpenGL convention of the lower-left of an image being the origin. This means that texture coordinates require a vertical coordinate swap to map between pixels and uvs. GenericImage.cs provides functions to do this Image.PixelToUV and Image.UVToPixel.
+Landform expects that texture coordinates for meshes follow the OpenGL convention of the lower-left of an image being the origin. This means that texture coordinates require a vertical coordinate swap to map between pixels and uvs.
